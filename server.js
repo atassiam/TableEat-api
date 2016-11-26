@@ -69,12 +69,13 @@ passport.use('local-signup', new LocalStrategy(
 
 
 //Configure the app
+var app = express();
 app.use(morgan('dev')); /* 'default','short','tiny','dev' */
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 var config = require('./config.js');
 funct = require('./functions.js');
-var app = express();
+
 
 //===============EXPRESS================
 // Configure Express
@@ -120,7 +121,7 @@ app.use(function(req, res, next){
 
 // Configure express to use handlebars templates
 var hbs = exphbs.create({
-    defaultLayout: 'main', //we will be creating this layout shortly
+    defaultLayout: 'main' //we will be creating this layout shortly
 });
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
