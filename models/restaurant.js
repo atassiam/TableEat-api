@@ -5,10 +5,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var restaurantSchema = new Schema({
-    owner : {name : "", email : ""},
-    menu : {starters : "String", main : "String", dessert : "String", drink : ""},
     name : "String",
-    address : {street : "String", city : "String", zipode : Number}
+    type : "String",
+    owner : {name : "", email : ""},
+    menu : {restaurant : "String", starters : "String", main : "String", dessert : "String", drink : ""},
+    address : {street : "String", city : "String", zipode : Number},
+    bookings : {}
 });
 
 module.exports = mongoose.model('Restaurant', restaurantSchema);

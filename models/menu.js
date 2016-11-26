@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var menuSchema = new Schema({
+    restaurant : "String",
     starters : "String",
     main : "String",
     dessert : "String",

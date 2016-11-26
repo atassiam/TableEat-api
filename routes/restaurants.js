@@ -2,6 +2,10 @@ var Restaurant = require('../models/restaurant');
 var Menu = require('../models/menu');
 var express = require('express');
 var router = express.Router();
+var itemRouter = express.Router({mergeParams: true});
+
+router.use('/restaurants/:name/menus', itemRouter);
+
 
 router.route('/restaurants')
     .get(function(req, res) {
@@ -70,14 +74,16 @@ router.route('/restaurants/:name')
     });
 
 /////////////////////////
-router.route('/restaurants/:id/menus')
+router.route('/restaurants/:name/menus')
     .get(function(req, res) {
-        Menu.find(function(err, menus) {
+        Restaurant.findOne({restaurants:req.params.name}, function (err, menu) {
+            console.log(menu);
+            console.log(req.params.name);
             if (err) {
                 return res.send(err);
             }
 
-            res.json(menus);
+            res.json(Restaurant);
         });
     })
     .post(function(req, res) {
