@@ -36,8 +36,7 @@ router.route('/register')
 
 router.route('/login')
     .get(function(req, res) {
-        res.send({ user : req.user });
-        console.log(req.user);
+        res.send({ user : req.user })
     })
     .post(passport.authenticate('local'), function(req, res) {
         req.session.save(function (err) {
@@ -51,7 +50,6 @@ router.route('/login')
 router.route('/login/:name')
     .get(function(req, res) {
         User.findOne({username: req.user.username}, function(err, user) {
-            console.log(req.user.username);
             if (err) {
                 return res.send(err);
             }

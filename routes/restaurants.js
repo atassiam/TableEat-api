@@ -66,7 +66,50 @@ router.route('/restaurants/:id')
             res.json({ message: 'Successfully deleted' });
         });
     });
+/////////////////////////
+router.route('/restaurants/:name')
+    .put(function(req,res){
+        Restaurant.findOne({ name: req.params.name }, function(err, restaurant) {
+            if (err) {
+                return res.send(err);
+            }
 
+            for (prop in req.body) {
+                restaurant[prop] = req.body[prop];
+            }
+
+            // save the movie
+            restaurant.save(function(err) {
+                if (err) {
+                    return res.send(err);
+                }
+
+                res.json({ message: 'Restaurant updated!' });
+            });
+        });
+    })
+    .get(function(req, res) {
+        Restaurant.findOne({ name: req.params.name}, function(err, restaurant) {
+            if (err) {
+                return res.send(err);
+            }
+
+            res.json(restaurant);
+        });
+    })
+    .delete(function(req, res) {
+        Restaurant.remove({
+            name: req.params.name
+        }, function(err, restaurant) {
+            if (err) {
+                return res.send(err);
+            }
+
+            res.json({ message: 'Successfully deleted' });
+        });
+    });
+
+/////////////////////////
 router.route('/restaurants/:id/menus')
     .get(function(req, res) {
         Menu.find(function(err, menus) {
