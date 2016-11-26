@@ -2,6 +2,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var User = require('../models/user');
+var passport = require('passport');
 
 //Configure the app
 var app = express();
@@ -9,7 +10,48 @@ var router = express.Router();
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
+
 ///ROUTES///
+
+router.route('/register')
+    .get(function(req, res) {
+        res.send({ });
+    })
+    .post(function(req, res) {
+        User.register(new User({ username : req.body.username }), req.body.password, function(err) {
+            if (err) {
+                return res.send({ error : err.message });
+            }
+
+            passport.authenticate('local')(req, res, function () {
+                req.session.save(function (err) {
+                    if (err) {
+                        return next(err);
+                    }
+                    res.redirect('/api');
+                });
+            });
+        });
+    });
+
+router.route('/login')
+    .get(function(req, res) {
+        res.send({ user : req.user });
+    })
+    .post(passport.authenticate('local'), function(req, res) {
+    res.redirect('/api');
+});
+
+router.route('/logout')
+    .get(function(req, res) {
+    req.logout();
+    res.redirect('/api/login');
+});
+
+router.route('/ping')
+    .get(function(req, res){
+    res.status(200).send("pong!");
+});
 
 router.route('/users')
     .get(function(req, res) {
@@ -35,7 +77,7 @@ router.route('/users')
 
 router.route('/users/:name')
     .put(function(req,res){
-        User.findOne({name: req.params.name }, function(err, user) {
+        User.findOne({username: req.params.username }, function(err, user) {
             if (err) {
                 return res.send(err);
             }
@@ -56,7 +98,7 @@ router.route('/users/:name')
     })
 
     .get(function(req, res) {
-        User.findOne({name: req.params.name}, function(err, user) {
+        User.findOne({username: req.params.username}, function(err, user) {
             if (err) {
                 return res.send(err);
             }
@@ -66,8 +108,8 @@ router.route('/users/:name')
     })
     .delete(function(req, res) {
         User.remove({
-            name: req.params.name
-        }, function(err, user) {
+            username: req.params.username
+        }, function(err) {
             if (err) {
                 return res.send(err);
             }
