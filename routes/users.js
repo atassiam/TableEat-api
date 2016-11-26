@@ -37,10 +37,48 @@ router.route('/register')
 router.route('/login')
     .get(function(req, res) {
         res.send({ user : req.user });
+        console.log(req.user);
     })
     .post(passport.authenticate('local'), function(req, res) {
-    res.redirect('/api');
-});
+        req.session.save(function (err) {
+            if (err) {
+                return next(err);
+            }
+            res.redirect('/api');
+        });
+    });
+
+router.route('/login/:name')
+    .get(function(req, res) {
+        User.findOne({username: req.user.username}, function(err, user) {
+            console.log(req.user.username);
+            if (err) {
+                return res.send(err);
+            }
+
+            res.json(user);
+        });
+    })
+    .put(function(req,res){
+        User.findOne({username: req.user.username }, function(err, user) {
+            if (err) {
+                return res.send(err);
+            }
+
+            for (prop in req.body) {
+                user[prop] = req.body[prop];
+            }
+
+            // save the movie
+            user.save(function(err) {
+                if (err) {
+                    return res.send(err);
+                }
+
+                res.json({ message: 'User updated!' });
+            });
+        });
+    });
 
 router.route('/logout')
     .get(function(req, res) {
@@ -61,17 +99,6 @@ router.route('/users')
             }
 
             res.json(users);
-        });
-    })
-    .post(function(req, res) {
-        console.log(req.body);
-        var user = new User(req.body);
-
-        user.save(function(err) {
-            if (err) {
-                return res.send(err);
-            }
-            res.send({ message: 'User Added' + ' name : ' + req.body});
         });
     });
 
@@ -96,9 +123,8 @@ router.route('/users/:name')
             });
         });
     })
-
     .get(function(req, res) {
-        User.findOne({username: req.params.username}, function(err, user) {
+        User.findOne({username: req.user.username}, function(err, user) {
             if (err) {
                 return res.send(err);
             }
