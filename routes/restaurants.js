@@ -76,14 +76,14 @@ router.route('/restaurants/:name')
 /////////////////////////
 router.route('/restaurants/:name/menus')
     .get(function(req, res) {
-        Restaurant.findOne({restaurants:req.params.name}, function (err, menu) {
+        Restaurant.findOne({name: req.params.name}, function (err, menu) {
             console.log(menu);
             console.log(req.params.name);
             if (err) {
                 return res.send(err);
             }
 
-            res.json(Restaurant);
+            res.json(menu.menu);
         });
     })
     .post(function(req, res) {
@@ -97,5 +97,28 @@ router.route('/restaurants/:name/menus')
             res.send({ message: 'Menu Added' });
         });
     });
+/////////////////////////////////////////
+router.route('/restaurants/:name/address')
+    .get(function(req, res) {
+        Restaurant.findOne({name: req.params.name}, function (err, menu) {
+            console.log(menu);
+            console.log(req.params.name);
+            if (err) {
+                return res.send(err);
+            }
 
+            res.json(menu.address);
+        });
+    })
+    .post(function(req, res) {
+        var menu = new Menu(req.body);
+
+        menu.save(function(err) {
+            if (err) {
+                return res.send(err);
+            }
+
+            res.send({ message: 'Menu Added' });
+        });
+    });
 module.exports = router;
