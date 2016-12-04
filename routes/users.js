@@ -18,7 +18,7 @@ router.route('/register')
         res.send({ });
     })
     .post(function(req, res) {
-        User.register(new User({ username : req.body.username }), req.body.password, function(err) {
+        User.register(new User({ firstname : req.body.firstname, lastname : req.body.lastname, username : req.body.username, password : req.body.password}), function(err) {
             if (err) {
                 return res.send({ error : err.message });
             }
