@@ -7,10 +7,10 @@ var Schema = mongoose.Schema;
 var restaurantSchema = new Schema({
     name : "String",
     type : "String",
-    owner : {name : "", email : ""},
-    menu : {restaurant : "String", starters : "String", main : "String", dessert : "String", drink : ""},
+    owner : {ownername : "String", owneremail : "String"},
+    menu : {starters : "String", main : "String", dessert : "String", drink : "String"},
     address : {street : "String", city : "String", zipode : Number},
-    bookings : {}
+    bookings : {bookingtime:"String", bookinguser:"String", bookingdetails:"String"}
 });
 
 module.exports = mongoose.model('Restaurant', restaurantSchema);
