@@ -5,7 +5,7 @@ var logger = require('morgan');
 var methodOverride = require('method-override');
 var session = require('express-session');
 var passport = require('passport');
-var LocalStrategy = require('passport-local');
+//var LocalStrategy = require('passport-local');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
@@ -38,10 +38,11 @@ app.use(passport.session());
 
 //===============PASSPORT===============
 // Passport session setup.
+/*
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
+*/
 // Connect to the db
 var mongoDbUrl = "mongodb://tableeat:ajou2016@ds045521.mlab.com:45521/tableeatdb";
 mongoose.connect(mongoDbUrl);
