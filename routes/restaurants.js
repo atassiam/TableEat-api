@@ -3,9 +3,10 @@ var Menu = require('../models/menu');
 var express = require('express');
 var router = express.Router();
 var itemRouter = express.Router({mergeParams: true});
+var fs = require('fs');
+var mongoose = require('mongoose');
 
 router.use('/restaurants/:name/menus', itemRouter);
-
 
 router.route('/restaurants')
     .get(function(req, res) {
@@ -19,16 +20,18 @@ router.route('/restaurants')
     })
     .post(function(req, res) {
         var restaurant = new Restaurant(req.body);
+        var imgPath = req.body.img;
+        restaurant.img.data = fs.readFileSync(imgPath);
+        restaurant.img.contentType = 'image/png';
 
         restaurant.save(function(err) {
             if (err) {
                 return res.send(err);
             }
-
-            res.send({ message: 'Restaurant Added' });
+            //res.contentType(restaurant.img.contentType);
+            res.send(req.body);
         });
     });
-
 
 /////////////////////////
 router.route('/restaurants/:name')
@@ -37,12 +40,14 @@ router.route('/restaurants/:name')
             if (err) {
                 return res.send(err);
             }
-
+            var imgPath = req.body.img;
+            restaurant.img.data = fs.readFileSync(imgPath);
+            restaurant.img.contentType = 'image/png';
             for (prop in req.body) {
                 restaurant[prop] = req.body[prop];
             }
 
-            // save the movie
+            // save the restaurant
             restaurant.save(function(err) {
                 if (err) {
                     return res.send(err);
@@ -121,4 +126,5 @@ router.route('/restaurants/:name/address')
             res.send({ message: 'Menu Added' });
         });
     });
+
 module.exports = router;

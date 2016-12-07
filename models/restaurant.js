@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var restaurantSchema = new Schema({
+    img: { data: Buffer, contentType: "String" },
     name : "String",
     type : "String",
     owner : {ownername : "String", owneremail : "String"},

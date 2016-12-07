@@ -17,13 +17,13 @@ router.get('/about', function(req, res) {
 });
 
 /* Handle Login POST */
-router.post('/login',
+/*router.post('/login',
     passport.authenticate('login', {
     successRedirect: '/api',
     failureRedirect: '/api/login',
     failureFlash : true
 }));
-
+*/
 /*
 router.post('/login', function(req, res, next) {
     passport.authenticate('login', function(err, user, info) {
@@ -50,16 +50,34 @@ router.post('/login', function(req, res, next) {
     })(req, res, next);
 });
 */
+
 /* GET Registration Page */
 router.get('/signup', function(req, res){
     res.render('register',{message: req.flash('message')});
 });
 
 /* Handle Registration POST */
-router.post('/signup', passport.authenticate('signup', {
-    successRedirect: '/',
-    failureRedirect: '/signup',
-    failureFlash : true
-}))
+/*router.post('/signup',
+    passport.authenticate('signup', {
+        successRedirect: '/',
+        failureRedirect: '/signup',
+        failureFlash : true
+}));*/
+
+router.post('/signup',
+    passport.authenticate('signup',
+        { failureRedirect: '/signup' }),
+    function(req, res) {
+    res.send(req.body);
+    //res.redirect('/');
+    });
+
+router.post('/login',
+    passport.authenticate('login',
+        { failureRedirect: '/login' }),
+    function(req, res) {
+        res.send(req.body);
+        //res.redirect('/');
+    });
 
 module.exports = router;
