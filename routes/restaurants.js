@@ -126,5 +126,30 @@ router.route('/restaurants/:name/address')
             res.send({ message: 'Menu Added' });
         });
     });
+router.route('/restaurants/:name/bookings')
+    .get(function(req, res) {
+        Restaurant.findOne({name: req.params.name}, function (err, menu) {
+            if (err) {
+                return res.send(err);
+            }
+
+            res.json(menu.bookings);
+        });
+    })
+    .post(function(req, res) {
+        console.log(req.body.bookings.bookingtime);
+        var friend = [{"bookingtime": req.body.bookings.bookingtime, "bookinguser": req.body.bookings.bookinguser,"bookingdetails":req.body.bookings.bookingdetails}];
+        Restaurant.findOneAndUpdate ({name: req.params.name},{$push: {bookings: friend}},{safe: true, upsert: true,new : true},function (err, menu) {
+
+
+                if (err) {
+                    return res.send(err);
+                }
+
+
+                res.send({message: 'Bookings Added'});
+
+        });
+    });
 
 module.exports = router;
