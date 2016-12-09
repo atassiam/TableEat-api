@@ -63,7 +63,7 @@ router.route('/restaurants/:name')
         });
     })
     .get(function(req, res) {
-        Restaurant.findOne({ name: req.params.name}, function(err, restaurant) {
+        Restaurant.find({"address.city" : req.params.name}, function(err, restaurant) {
             if (err) {
                 return res.send(err);
             }
