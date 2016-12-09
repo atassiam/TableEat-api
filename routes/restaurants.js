@@ -1,5 +1,6 @@
 var Restaurant = require('../models/restaurant');
 var Menu = require('../models/menu');
+var Booking = require('../models/booking');
 var express = require('express');
 var router = express.Router();
 var itemRouter = express.Router({mergeParams: true});
@@ -23,13 +24,17 @@ router.route('/restaurants')
         var imgPath = req.body.img;
         restaurant.img.data = fs.readFileSync(imgPath);
         restaurant.img.contentType = 'image/png';
+        var menu = new Menu(req.body.menu);
+        menu.save();
+        var bookings = new Booking(req.body.bookings);
+        bookings.save();
 
         restaurant.save(function(err) {
             if (err) {
                 return res.send(err);
             }
             //res.contentType(restaurant.img.contentType);
-            res.send(req.body);
+            res.json({ message: 'Restaurant Added!' });
         });
     });
 
@@ -129,6 +134,7 @@ router.route('/restaurants/:name/address')
 router.route('/restaurants/:name/bookings')
     .get(function(req, res) {
         Restaurant.findOne({name: req.params.name}, function (err, menu) {
+
             if (err) {
                 return res.send(err);
             }
@@ -137,10 +143,11 @@ router.route('/restaurants/:name/bookings')
         });
     })
     .post(function(req, res) {
-        console.log(req.body.bookings.bookingtime);
-        var friend = [{"bookingtime": req.body.bookings.bookingtime, "bookinguser": req.body.bookings.bookinguser,"bookingdetails":req.body.bookings.bookingdetails}];
-        Restaurant.findOneAndUpdate ({name: req.params.name},{$push: {bookings: friend}},{safe: true, upsert: true,new : true},function (err, menu) {
-
+        var friend = new Booking(req.body);
+        //friend.save();
+        Restaurant.update({name: req.params.name},{$push: {"bookings": friend}},{safe: true, upsert: true},function (err, menu) {
+            var bookings = new Booking(req.body);
+            bookings.save();
 
                 if (err) {
                     return res.send(err);
