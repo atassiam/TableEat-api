@@ -13,7 +13,8 @@ var restaurantSchema = new Schema({
     owner : {ownername : "String", owneremail : "String"},
     menu : [{type: Schema.Types.Mixed, ref: 'Menu'}],
     address : {street : "String", city : "String", zipode : Number},
-    bookings : [{type: Schema.Types.Mixed, ref: 'Booking'}]
+    bookings : [{type: Schema.Types.Mixed, ref: 'Booking'}],
+    reviews : [{type: Schema.Types.Mixed, ref: 'Review'}]
 });
 
 module.exports = mongoose.model('Restaurant', restaurantSchema);

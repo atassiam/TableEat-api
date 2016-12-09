@@ -1,6 +1,7 @@
 var Restaurant = require('../models/restaurant');
 var Menu = require('../models/menu');
 var Booking = require('../models/booking');
+var Review = require('../models/review');
 var express = require('express');
 var router = express.Router();
 var itemRouter = express.Router({mergeParams: true});
@@ -158,5 +159,34 @@ router.route('/restaurants/:name/bookings')
 
         });
     });
+
+router.route('/restaurants/:name/reviews')
+    .get(function(req, res) {
+        Restaurant.findOne({name: req.params.name}, function (err, menu) {
+
+            if (err) {
+                return res.send(err);
+            }
+
+            res.json(menu.reviews);
+        });
+    })
+    .post(function(req, res) {
+        var friend = new Review(req.body);
+        //friend.save();
+        Restaurant.update({name: req.params.name},{$push: {"reviews": friend}},{safe: true, upsert: true},function (err, menu) {
+            var review = new Review(req.body);
+            review.save();
+
+            if (err) {
+                return res.send(err);
+            }
+
+
+            res.send({message: 'Reviews Added'});
+
+        });
+    });
+
 
 module.exports = router;
