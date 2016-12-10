@@ -15,6 +15,7 @@ var index = require('./routes/index');
 var User = require('./models/user');
 var users = require('./routes/users');
 var restaurants = require('./routes/restaurants');
+var booking = require('./routes/bookings');
 
 //Configure the app
 var app = express();
@@ -72,6 +73,7 @@ mongoose.connect(mongoDbUrl);
 app.use('/api', index);
 app.use('/api', users);
 app.use('/api', restaurants);
+app.use('/api', booking);
 module.exports = app;
 
 //Define the port

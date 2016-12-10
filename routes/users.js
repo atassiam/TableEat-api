@@ -195,16 +195,11 @@ router.route('/login/:name')
             });
         });
     });
-
+*/
 router.route('/logout')
     .get(function(req, res) {
     req.logout();
     res.redirect('/api/login');
-});
-
-router.route('/ping')
-    .get(function(req, res){
-    res.status(200).send("pong!");
 });
 
 router.route('/users')
@@ -218,7 +213,7 @@ router.route('/users')
         });
     });
 
-router.route('/users/:name')
+router.route('/users/:username')
     .put(function(req,res){
         User.findOne({username: req.params.username }, function(err, user) {
             if (err) {
@@ -240,14 +235,14 @@ router.route('/users/:name')
         });
     })
     .get(function(req, res) {
-        User.findOne({username: req.user.username}, function(err, user) {
+        User.findOne({username: req.params.username}, function(err, user) {
             if (err) {
                 return res.send(err);
             }
-
             res.json(user);
         });
     })
+
     .delete(function(req, res) {
         User.remove({
             username: req.params.username
@@ -259,5 +254,5 @@ router.route('/users/:name')
             res.json({ message: 'Successfully deleted' });
         });
     });
-*/
+
 module.exports = router;
