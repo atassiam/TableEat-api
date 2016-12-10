@@ -9,7 +9,7 @@ var userSchema = new Schema({
     lastname: "String",
     username: "String",
     password: "String",
-    bookings : [{type: Schema.Types.Mixed, ref: 'Booking'}],
+    bookings : [{type: Schema.Types.Mixed, ref: 'Booking'}]
 });
 
 userSchema.plugin(passportLocalMongoose);
