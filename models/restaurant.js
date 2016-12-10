@@ -11,7 +11,7 @@ var restaurantSchema = new Schema({
     name : "String",
     type : "String",
     owner : {ownername : "String", owneremail : "String"},
-    menu : [{type: Schema.Types.Mixed, ref: 'Menu'}],
+    menu : {type: Schema.Types.Mixed, ref: 'Menu'},
     address : {street : "String", city : "String", zipode : Number},
     bookings : [{type: Schema.Types.Mixed, ref: 'Booking'}],
     reviews : [{type: Schema.Types.Mixed, ref: 'Review'}]

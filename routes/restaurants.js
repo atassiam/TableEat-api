@@ -64,7 +64,14 @@ router.route('/restaurants/:name')
         });
     })
     .get(function(req, res) {
-        Restaurant.find({"address.city" : req.params.name}, function(err, restaurant) {
+        /*Restaurant.find({"address.city" : req.params.name}, function(err, restaurant) {
+            if (err) {
+                return res.send(err);
+            }
+
+            res.json(restaurant);
+        });*/
+        Restaurant.findOne({name : req.params.name}, function(err, restaurant) {
             if (err) {
                 return res.send(err);
             }
