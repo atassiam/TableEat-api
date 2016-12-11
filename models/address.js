@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 var addressSchema = new Schema({
     street : "String",
     city : "String",
-    zipode : Number
+    zipode : "String"
 });
 
 module.exports = mongoose.model('Address', addressSchema);

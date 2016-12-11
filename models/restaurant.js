@@ -12,7 +12,7 @@ var restaurantSchema = new Schema({
     type : "String",
     owner : {ownername : "String", owneremail : "String"},
     menu : {type: Schema.Types.Mixed, ref: 'Menu'},
-    address : {street : "String", city : "String", zipode : Number},
+    address : {street : "String", city : "String", zipode : "String"},
     bookings : [{type: Schema.Types.Mixed, ref: 'Booking'}],
     reviews : [{type: Schema.Types.Mixed, ref: 'Review'}]
 });
