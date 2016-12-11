@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var reviewSchema = new Schema({
-    reviewer :{name :"String", email :"String" },
+    reviewer :{reviewername :"String", revieweremail :"String" },
     reviewtext:"String",
     reviewstars : "String"
 
