@@ -154,8 +154,8 @@ router.route('/restaurants/:name/bookings')
         var friend = new Booking(req.body);
         //friend.save();
         Restaurant.update({name: req.params.name},{$push: {"bookings": friend}},{safe: true, upsert: true},function (err, menu) {
-            var bookings = new Booking(req.body);
-            bookings.save();
+            //var bookings = new Booking(req.body);
+            friend.save();
 
                 if (err) {
                     return res.send(err);

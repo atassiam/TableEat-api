@@ -30,7 +30,7 @@ router.route('/bookings')
 router.route('/bookings/:user')
     .get(function(req, res) {
         console.log(req.params.user);
-        Booking.find({'bookUser.name': req.params.user},function(err, bookings) {
+        Booking.find({'bookUser.email': req.params.user},function(err, bookings) {
 
             if (err) {
                 return res.send(err);

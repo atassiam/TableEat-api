@@ -10,7 +10,8 @@ var bookingSchema = new Schema({
         drink :[{drinkitem : "String", quantity:"String"}]
     },
     bookingtime : "String",
-    numberOfpeople :"String"
+    numberOfpeople :"String",
+    restaurantName: "String"
 
 });
 
