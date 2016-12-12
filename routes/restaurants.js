@@ -195,5 +195,16 @@ router.route('/restaurants/:name/reviews')
         });
     });
 
+/////////////////////////
+router.route('/restaurants/owner/:owneremail')
+    .get(function(req, res) {
+        Restaurant.find({"owner.owneremail" : req.params.owneremail}, function(err, restaurant) {
+         if (err) {
+         return res.send(err);
+         }
+
+         res.json(restaurant);
+         });
+    });
 
 module.exports = router;

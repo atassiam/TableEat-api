@@ -10,6 +10,8 @@ var restaurantSchema = new Schema({
     img: { data: Buffer, contentType: "String" },
     name : "String",
     type : "String",
+    description : "String",
+    priceRange : "String",
     owner : {ownername : "String", owneremail : "String"},
     menu : {type: Schema.Types.Mixed, ref: 'Menu'},
     address : {street : "String", city : "String", zipode : "String"},
