@@ -92,6 +92,19 @@ router.route('/restaurants/:name')
     });
 
 /////////////////////////
+router.route('/restaurants/search/:name')
+    .get(function(req, res) {
+        Restaurant.find({"address.city" : req.params.name}, function(err, restaurant) {
+         if (err) {
+         return res.send(err);
+         }
+
+         res.json(restaurant);
+         });
+
+    });
+
+/////////////////////////
 router.route('/restaurants/:name/menus')
     .get(function(req, res) {
         Restaurant.findOne({name: req.params.name}, function (err, menu) {

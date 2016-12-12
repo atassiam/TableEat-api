@@ -9,7 +9,7 @@ var Booking = require('../models/booking');
 var restaurantSchema = new Schema({
     img: { data: Buffer, contentType: "String" },
     name : "String",
-    type : "String",
+    typeOfFood : "String",
     description : "String",
     priceRange : "String",
     owner : {ownername : "String", owneremail : "String"},
